@@ -6,6 +6,14 @@ It's inspired by [mattn/gobanner](https://github.com/mattn/gobanner) .
 
 ## How to Install
 
+You can install from [PowerShell Gallery](https://www.powershellgallery.com/packages/PSBanner/).
+
+```ps1
+Install-Module -Name PSBanner -Scope CurrentUser
+```
+
+:exclamation: This software is supported Windows Desktop Edition only.
+
 ## Usage
 
 ### Write-Banner (psbanner)
