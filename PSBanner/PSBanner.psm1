@@ -134,8 +134,3 @@ function Write-Banner {
 }
 # Alias
 Set-Alias -Name psbanner -Value Write-Banner
-
-# Export direct (Only PS2.0)
-if ($PSVersionTable.PSVersion.Major -eq 2) {
-    Export-ModuleMember -Function 'Get-FontFamilies', 'Write-Banner' -Alias 'psbanner'
-}
