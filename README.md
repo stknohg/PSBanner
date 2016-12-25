@@ -25,6 +25,9 @@ Write-Banner "Hello!"
 # change font name, size
 Write-Banner "Hello!" -FontName "Consolas" -FontSize 14
 
+# use fontstyles
+Write-Banner "Hello!" -Bold -Italic -Strikeout -Underline
+
 # use pipeline
 "Hello!" | Write-Banner
 
