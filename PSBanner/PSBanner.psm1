@@ -39,6 +39,14 @@ function Get-FontFamilies {
     Get-FontFamilies cmdlet can get all available font family names.
 .PARAMETER FontSize
     Font size(pt).
+.PARAMETER Bold
+    Specify using Bold for font style.
+.PARAMETER Italic
+    Specify using Italic for font style.
+.PARAMETER Strikeout
+    Specify using Strikeout for font style.
+.PARAMETER Underline
+    Specify using Underline for font style.
 .PARAMETER Stream
     Default false.
 #>
@@ -54,6 +62,14 @@ function Write-Banner {
         [Parameter(Mandatory=$false)]
         [ValidateRange(1, 100)]
         [int]$FontSize = 10,
+        [Parameter(Mandatory=$false)]
+        [switch]$Bold = $false,
+        [Parameter(Mandatory=$false)]
+        [switch]$Italic = $false,
+        [Parameter(Mandatory=$false)]
+        [switch]$Strikeout = $false,
+        [Parameter(Mandatory=$false)]
+        [switch]$Underline = $false,
         [Parameter(Mandatory=$false)]
         [switch]$Stream = $false
     )
@@ -78,11 +94,26 @@ function Write-Banner {
                     $message = $InputObject.ToString()
                 }
             }
-
+            
+            # set font and font style
+            $fontStyle = [System.Drawing.FontStyle]::Regular
+            if ($Bold) {
+                $fontStyle += [System.Drawing.FontStyle]::Bold
+            }
+            if ($Italic) {
+                $fontStyle += [System.Drawing.FontStyle]::Italic
+            }
+            if ($Strikeout) {
+                $fontStyle += [System.Drawing.FontStyle]::Strikeout
+            } 
+            if ($Underline) {
+                $fontStyle += [System.Drawing.FontStyle]::Underline
+            } 
+            $font = New-Object "System.Drawing.Font" -ArgumentList @($FontName, $FontSize, $fontStyle)
+            
             # draw graphic
             # 多分もっと上手いやり方があるはず...
             $brash = New-Object "System.Drawing.SolidBrush" -ArgumentList @([System.Drawing.Color]::White)
-            $font = New-Object "System.Drawing.Font" -ArgumentList @($FontName, $FontSize)
             $format = New-Object "System.Drawing.StringFormat" -ArgumentList @([System.Drawing.StringFormat]::GenericTypographic)
             $bitmap = New-Object "System.Drawing.Bitmap" -ArgumentList @(1, 1)
             $graphic = [System.Drawing.Graphics]::FromImage($bitmap)
@@ -95,10 +126,10 @@ function Write-Banner {
             #$bitmap.Save("$env:TEMP\banner.png", [System.Drawing.Imaging.ImageFormat]::Png)
 
             # output to the console
-            $ScreenWidth = $Host.UI.RawUI.BufferSize.Width
+            $screenWidth = $Host.UI.RawUI.BufferSize.Width
             $trimWidth = $bitmap.Width
-            if ($trimWidth -gt $ScreenWidth) {
-                $trimWidth = $ScreenWidth
+            if ($trimWidth -gt $screenWidth) {
+                $trimWidth = $screenWidth
             }
             $line = ""
             for ($y = 0; $y -lt $bitmap.Height; $y++) {
