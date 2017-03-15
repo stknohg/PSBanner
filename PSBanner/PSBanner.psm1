@@ -53,7 +53,7 @@ function Get-FontFamilies {
 function Write-Banner {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0, ValueFromRemainingArguments = $true)]
         [psobject]$InputObject,
         [Alias("f")]
         [Parameter(Mandatory = $false)]
@@ -85,15 +85,16 @@ function Write-Banner {
     process {
         try {
             # get output string message
-            if ($InputObject -is [string]) {
-                $message = $InputObject
-            }
-            else {
-                if (Get-Member -InputObject $InputObject -MemberType Properties -Name Name) {
-                    $message = $InputObject.Name
+            $message = ""
+            foreach ($object in $InputObject) {
+                if ($message -ne "") {
+                    $message += " "
+                }
+                if (Get-Member -InputObject $object -MemberType Properties -Name Name) {
+                    $message += $object.Name
                 }
                 else {
-                    $message = $InputObject.ToString()
+                    $message += $object.ToString()
                 }
             }
             
