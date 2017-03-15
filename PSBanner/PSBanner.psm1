@@ -53,24 +53,24 @@ function Get-FontFamilies {
 function Write-Banner {
     [CmdletBinding()]
     param(
-        [Parameter(Mandatory=$true, ValueFromPipeline=$true, Position=0)]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, Position = 0)]
         [psobject]$InputObject,
         [Alias("f")]
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [string]$FontName = "Consolas",
         [Alias("s")]
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [ValidateRange(1, 100)]
         [int]$FontSize = 10,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Bold = $false,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Italic = $false,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Strikeout = $false,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Underline = $false,
-        [Parameter(Mandatory=$false)]
+        [Parameter(Mandatory = $false)]
         [switch]$Stream = $false
     )
     
@@ -87,10 +87,12 @@ function Write-Banner {
             # get output string message
             if ($InputObject -is [string]) {
                 $message = $InputObject
-            } else {
+            }
+            else {
                 if (Get-Member -InputObject $InputObject -MemberType Properties -Name Name) {
                     $message = $InputObject.Name
-                } else {
+                }
+                else {
                     $message = $InputObject.ToString()
                 }
             }
@@ -140,13 +142,15 @@ function Write-Banner {
                     $p = $bitmap.GetPixel($x, $y)
                     if ($p.R -eq 0 -and $p.G -eq 0 -and $p.B -eq 0) {
                         $line += " "
-                    } else {
+                    }
+                    else {
                         $line += "#"
                     }
                 }
                 if ($Stream) {
                     Write-Output $line
-                } else {
+                }
+                else {
                     $line += [System.Environment]::NewLine
                 }
             }
