@@ -115,7 +115,7 @@ function Write-Banner {
             
             # draw graphic
             # 多分もっと上手いやり方があるはず...
-            $brash = New-Object "System.Drawing.SolidBrush" -ArgumentList @([System.Drawing.Color]::White)
+            $brush = New-Object "System.Drawing.SolidBrush" -ArgumentList @([System.Drawing.Color]::White)
             $format = New-Object "System.Drawing.StringFormat" -ArgumentList @([System.Drawing.StringFormat]::GenericTypographic)
             $bitmap = New-Object "System.Drawing.Bitmap" -ArgumentList @(1, 1)
             $graphic = [System.Drawing.Graphics]::FromImage($bitmap)
@@ -123,7 +123,7 @@ function Write-Banner {
             $bitmap = New-Object "System.Drawing.Bitmap" -ArgumentList @([int]$measuredSize.Width, [int]$measuredSize.Height)
             $graphic = [System.Drawing.Graphics]::FromImage($bitmap)
             # draw string
-            $graphic.DrawString($message, $font, $brash , 0, 0, $format)
+            $graphic.DrawString($message, $font, $brush , 0, 0, $format)
             # for debug
             #$bitmap.Save("$env:TEMP\banner.png", [System.Drawing.Imaging.ImageFormat]::Png)
 
@@ -159,7 +159,7 @@ function Write-Banner {
             }
         }
         finally {
-            $brash.Dispose()
+            $brush.Dispose()
             $format.Dispose()
             $font.Dispose()
             $graphic.Dispose()
