@@ -3,7 +3,7 @@
 #
 @{
     GUID = 'f60e6bc5-d535-488f-a246-494c511d59e3'
-    ModuleVersion = '0.2'
+    ModuleVersion = '0.3'
     Description = 'Banner written in PowerShell.'
 
     Author = 'stknohg'
