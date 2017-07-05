@@ -1,24 +1,22 @@
 #requires -Version 2.0
 Set-StrictMode -Version Latest
-# private function
-function Test-Environment {
-    # this module supports only desktop edition
-    Set-StrictMode -Version 2.0
-    try {
-        if ($PSVersionTable.PSEdition -eq "Desktop") {
-            return $true
-        }
-        return $false
+
+# private functinon
+function LoadAssembly {
+    # PowerShell Desktop Edtion
+    if ($null -eq $PSEdition) {
+        Add-Type -AssemblyName 'System.Drawing'
+        return
     }
-    catch {
-        # PS5.1 earlier(=Desktop Edition)
-        return $true
+    if ($PSEdition -eq 'Desktop') {
+        Add-Type -AssemblyName 'System.Drawing'
+        return
     }
+    # PowerShell Core Edition(Win,Linux,Mac)
+    # * pre-installation of libgdiplus is required on linux/mac
+    Add-Type -AssemblyName (Join-Path $PSScriptRoot 'CoreCompat.System.Drawing.dll')
 }
-if (-not (Test-Environment)) {
-    Write-Warning "[PSBanner]This environment is not supported."
-    return
-}
+LoadAssembly
 
 <#
 .SYNOPSIS
