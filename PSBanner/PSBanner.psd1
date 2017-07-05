@@ -11,7 +11,7 @@
     Copyright = '(c) 2016 stknohg. All rights reserved.'
 
     NestedModules = @('PSBanner.psm1')
-    RequiredAssemblies = @('System.Drawing')
+    #RequiredAssemblies = @('System.Drawing')
 
     # TypesToProcess = @()
     # FormatsToProcess = @()
