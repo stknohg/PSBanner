@@ -5,7 +5,7 @@ Import-Module (Join-Path (Split-Path $PSScriptRoot -Parent) "\PSBanner") -Force
 #
 Describe "Write-Banner" {
     It "if the argument is single string, returns correct value." {
-        Write-Banner 'Hello' | Out-String | Should Be @"
+        Write-Banner 'Hello' | Out-String | Should -Be @"
                                      
                                      
                                      
@@ -27,7 +27,7 @@ Describe "Write-Banner" {
 "@
     }
     It "if the argument is multi string, returns correct value." {
-        Write-Banner  Hello World | Out-String | Should Be @"
+        Write-Banner  Hello World | Out-String | Should -Be @"
                                                                                  
                                                                                  
                                                                                  
@@ -49,7 +49,7 @@ Describe "Write-Banner" {
 "@
     }
     It "FontSize parameter works fine." {
-        Write-Banner Hello -FontSize 16 | Out-String | Should Be @"
+        Write-Banner Hello -FontSize 16 | Out-String | Should -Be @"
                                                            
                                                            
                                                            
@@ -80,7 +80,7 @@ Describe "Write-Banner" {
 "@
     }
     It "Bold,Italic,Underline,Strikeout parameters work fine." {
-        Write-Banner Hello -FontSize 16 -Bold -Italic -Underline -Strikeout | Out-String | Should Be @"
+        Write-Banner Hello -FontSize 16 -Bold -Italic -Underline -Strikeout | Out-String | Should -Be @"
                                                            
                                                            
                                                            
@@ -111,7 +111,7 @@ Describe "Write-Banner" {
 "@
     }
     It "Stream parameter works fine." {
-        (Write-Banner Hello | Measure-Object).Count | Should Be 1
-        (Write-Banner Hello -Stream | Measure-Object).Count | Should Be 16
+        (Write-Banner Hello | Measure-Object).Count | Should -Be 1
+        (Write-Banner Hello -Stream | Measure-Object).Count | Should -Be 16
     }
 }
