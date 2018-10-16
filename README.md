@@ -12,7 +12,7 @@ You can install from [PowerShell Gallery](https://www.powershellgallery.com/pack
 Install-Module -Name PSBanner -Scope CurrentUser
 ```
 
-:exclamation: This software is supported Windows Desktop Edition only.
+* This module is supported Windows only.
 
 ## Usage
 
