@@ -4,15 +4,16 @@ Set-StrictMode -Version Latest
 # private functinon
 function LoadAssembly {
     # PowerShell Desktop Edtion
-    if ($null -eq $PSEdition) {
-        Add-Type -AssemblyName 'System.Drawing'
-        return
-    }
-    if ($PSEdition -eq 'Desktop') {
+    if ($null -eq $PSEdition -or $PSEdition -eq 'Desktop') {
         Add-Type -AssemblyName 'System.Drawing'
         return
     }
     # PowerShell Core Edition(Win,Linux,Mac)
+    if ($PSVersionTable.PSVersion -ge '6.1.0') {
+        Add-Type -AssemblyName 'System.Drawing'
+        return
+    }
+    # Before PowerShell Core 6.1, CoreCompat.System.Drawing.dll is required.
     # * pre-installation of libgdiplus is required on linux/mac
     Add-Type -AssemblyName (Join-Path $PSScriptRoot 'CoreCompat.System.Drawing.dll')
 }
@@ -90,8 +91,7 @@ function Write-Banner {
                 }
                 if (Get-Member -InputObject $object -MemberType Properties -Name Name) {
                     $message += $object.Name
-                }
-                else {
+                } else {
                     $message += $object.ToString()
                 }
             }
@@ -141,23 +141,20 @@ function Write-Banner {
                     $p = $bitmap.GetPixel($x, $y)
                     if ($p.R -eq 0 -and $p.G -eq 0 -and $p.B -eq 0) {
                         $line += " "
-                    }
-                    else {
+                    } else {
                         $line += "#"
                     }
                 }
                 if ($Stream) {
                     Write-Output $line
-                }
-                else {
+                } else {
                     $line += [System.Environment]::NewLine
                 }
             }
             if (-not $Stream) {
                 Write-Output $line
             }
-        }
-        finally {
+        } finally {
             $brush.Dispose()
             $format.Dispose()
             $font.Dispose()
